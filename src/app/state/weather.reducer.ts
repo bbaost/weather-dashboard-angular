@@ -1,6 +1,6 @@
 import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 import { City, Forecast } from '../core/weather.models';
-import { WeatherActions } from './weather.actions';
+import { WeatherActions } from './weather.action';
 
 export const FAVORITES_KEY = 'weather.favorites';
 

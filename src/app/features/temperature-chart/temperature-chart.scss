@@ -1,0 +1,7 @@
+svg { width: 100%; height: auto; }
+.line { fill: none; stroke-width: 2; }
+.max { stroke: #d9480f; fill: #d9480f; }
+.min { stroke: #1c7ed6; fill: #1c7ed6; }
+.line.max, .line.min { fill: none; }
+text { font-size: 10px; fill: currentColor; stroke: none; }
+.label { opacity: 0.6; }

@@ -1,5 +1,5 @@
 import { City } from '../core/weather.models';
-import { WeatherActions } from './weather.actions';
+import { WeatherActions } from './weather.action';
 import { initialState, weatherFeature } from './weather.reducer';
 
 const toulouse: City = {

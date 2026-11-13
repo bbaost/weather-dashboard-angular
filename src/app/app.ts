@@ -11,16 +11,17 @@
 //   protected readonly title = signal('dashboard-weather');
 // }
 import { Component, inject } from '@angular/core';
-import { JsonPipe } from '@angular/common';
 import { CitySearch } from './features/city-search/city-search';
 import { City } from './core/weather.models';
 import { Store } from '@ngrx/store';
 import { weatherFeature } from './state/weather.reducer';
-import { WeatherActions } from './state/weather.actions';
+import { WeatherActions } from './state/weather.action';
+import { ForecastView } from './features/forecast-view/forecast-view';
+import { TemperatureChart } from './features/temperature-chart/temperature-chart';
 
 @Component({
   selector: 'app-root',
-  imports: [CitySearch, JsonPipe],
+  imports: [CitySearch, ForecastView, TemperatureChart],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
@@ -33,6 +34,7 @@ export class App {
   error = this.store.selectSignal(weatherFeature.selectError);
   favorites = this.store.selectSignal(weatherFeature.selectFavorites);
   isFavorite = this.store.selectSignal(weatherFeature.selectIsFavorite);
+  unit = this.store.selectSignal(weatherFeature.selectUnit);
 
   onCitySelected(city: City): void {
     this.store.dispatch(WeatherActions.citySelected({ city }));
@@ -40,5 +42,9 @@ export class App {
 
   toggleFavorite(city: City): void {
     this.store.dispatch(WeatherActions.favoriteToggled({ city }));
+  }
+
+  toggleUnit(): void {
+    this.store.dispatch(WeatherActions.unitToggled());
   }
 }

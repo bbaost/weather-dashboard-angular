@@ -1,5 +1,9 @@
 <main>
-  <h1>Weather Dashboard</h1>
+  <header>
+    <h1>Weather Dashboard</h1>
+    <button type="button" class="unit" (click)="toggleUnit()">Switch to °{{ unit() === 'C' ? 'F' : 'C' }}</button>
+  </header>
+
   <app-city-search (citySelected)="onCitySelected($event)" />
 
   @if (favorites().length) {
@@ -13,12 +17,22 @@
   @if (city(); as c) {
     <h2>
       {{ c.name }}, {{ c.country }}
-      <button type="button" (click)="toggleFavorite(c)">
+      <button type="button" class="fav" (click)="toggleFavorite(c)">
         {{ isFavorite() ? '★ Remove favorite' : '☆ Add favorite' }}
       </button>
     </h2>
-    @if (loading()) { <p>Loading…</p> }
-    @if (error(); as e) { <p role="alert">{{ e }}</p> }
-    @if (forecast(); as f) { <pre>{{ f | json }}</pre> }
+
+    @if (loading()) {
+      <p>Loading…</p>
+    }
+    @if (error(); as e) {
+      <p role="alert" class="error">{{ e }}</p>
+    }
+    @if (forecast(); as f) {
+      <app-forecast-view [forecast]="f" [unit]="unit()" />
+      <app-temperature-chart [daily]="f.daily" [unit]="unit()" />
+    }
+  } @else {
+    <p class="hint">Search for a city to see its forecast.</p>
   }
 </main>

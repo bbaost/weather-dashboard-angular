@@ -1,0 +1,21 @@
+<section class="current">
+  <span class="icon" aria-hidden="true">{{ describe(forecast().current.weatherCode).icon }}</span>
+  <div>
+    <p class="temp">{{ temp(forecast().current.temperature) }}°{{ unit() }}</p>
+    <p>
+      {{ describe(forecast().current.weatherCode).label }} · wind
+      {{ forecast().current.windSpeed }} km/h
+    </p>
+  </div>
+</section>
+
+<ul class="days">
+  @for (day of forecast().daily; track day.date) {
+    <li>
+      <span class="day">{{ day.date | date: 'EEE d' }}</span>
+      <span class="icon" aria-hidden="true">{{ describe(day.weatherCode).icon }}</span>
+      <span class="max">{{ temp(day.tempMax) }}°</span>
+      <span class="min">{{ temp(day.tempMin) }}°</span>
+    </li>
+  }
+</ul>

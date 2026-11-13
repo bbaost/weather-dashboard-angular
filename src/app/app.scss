@@ -1,0 +1,41 @@
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1rem;
+  font-family: system-ui, sans-serif;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.favorites {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.75rem 0;
+
+  button {
+    padding: 0.3rem 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 999px;
+    background: #fff;
+    cursor: pointer;
+  }
+}
+
+.fav, .unit {
+  padding: 0.3rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.fav { font-size: 0.85rem; margin-left: 0.5rem; }
+.error { color: #c92a2a; }
+.hint { color: #666; }

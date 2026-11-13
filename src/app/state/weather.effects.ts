@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { catchError, map, of, switchMap, tap, withLatestFrom } from 'rxjs';
 import { WeatherService } from '../core/weather.service';
-import { WeatherActions } from './weather.actions';
+import { WeatherActions } from './weather.action';
 import { FAVORITES_KEY, weatherFeature } from './weather.reducer';
 
 export const loadForecast$ = createEffect(

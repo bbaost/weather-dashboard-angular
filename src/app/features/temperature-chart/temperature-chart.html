@@ -1,0 +1,17 @@
+@if (model(); as m) {
+  <svg
+    [attr.viewBox]="'0 0 ' + width + ' ' + height"
+    role="img"
+    aria-label="Maximum and minimum temperature over the next days"
+  >
+    <polyline class="line max" [attr.points]="m.maxLine" />
+    <polyline class="line min" [attr.points]="m.minLine" />
+    @for (p of m.points; track p.label) {
+      <circle class="dot max" [attr.cx]="p.x" [attr.cy]="p.yMax" r="3" />
+      <circle class="dot min" [attr.cx]="p.x" [attr.cy]="p.yMin" r="3" />
+      <text [attr.x]="p.x" [attr.y]="p.yMax - 8" text-anchor="middle">{{ p.max }}°</text>
+      <text [attr.x]="p.x" [attr.y]="p.yMin + 16" text-anchor="middle">{{ p.min }}°</text>
+      <text [attr.x]="p.x" [attr.y]="height - 4" text-anchor="middle" class="label">{{ p.label }}</text>
+    }
+  </svg>
+}
