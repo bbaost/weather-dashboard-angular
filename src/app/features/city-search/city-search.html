@@ -1,0 +1,15 @@
+<input
+  type="search"
+  [formControl]="query"
+  placeholder="Search a city…"
+  aria-label="Search a city"
+/>
+@if (results().length) {
+  <ul class="results">
+    @for (city of results(); track city.id) {
+      <li>
+        <button type="button" (click)="select(city)">{{ city.name }}, {{ city.country }}</button>
+      </li>
+    }
+  </ul>
+}
