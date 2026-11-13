@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
-import { City, Forecast } from './weather.models';
+import { City, Forecast, GeocodingResponse, ForecastResponse, } from './weather.models';
 
 @Injectable({ providedIn: 'root' })
 export class WeatherService {
@@ -9,12 +9,13 @@ export class WeatherService {
 
   searchCities(query: string): Observable<City[]> {
     return this.http
-      .get<any>('https://geocoding-api.open-meteo.com/v1/search', {
+      .get<GeocodingResponse>('https://geocoding-api.open-meteo.com/v1/search', {
         params: { name: query, count: 5, language: 'en' },
       })
       .pipe(
         map((res) =>
-          (res.results ?? []).map((r: any) => ({
+          (res.results ?? []).map(
+            (r: City) => ({
             id: r.id,
             name: r.name,
             country: r.country,
@@ -27,7 +28,7 @@ export class WeatherService {
 
   getForecast(lat: number, lon: number): Observable<Forecast> {
     return this.http
-      .get<any>('https://api.open-meteo.com/v1/forecast', {
+      .get<ForecastResponse>('https://api.open-meteo.com/v1/forecast', {
         params: {
           latitude: lat,
           longitude: lon,
