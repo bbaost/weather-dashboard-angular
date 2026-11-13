@@ -11,7 +11,7 @@
       <circle class="dot min" [attr.cx]="p.x" [attr.cy]="p.yMin" r="3" />
       <text [attr.x]="p.x" [attr.y]="p.yMax - 8" text-anchor="middle">{{ p.max }}°</text>
       <text [attr.x]="p.x" [attr.y]="p.yMin + 16" text-anchor="middle">{{ p.min }}°</text>
-      <text [attr.x]="p.x" [attr.y]="height - 4" text-anchor="middle" class="label">{{ p.label }}</text>
+      <text [attr.x]="p.x" [attr.y]="height - 10" text-anchor="middle" class="label">{{ p.label }}</text>
     }
   </svg>
 }

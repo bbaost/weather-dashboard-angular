@@ -2,9 +2,11 @@ import { Component, computed, input } from '@angular/core';
 import { DailyForecast } from '../../core/weather.models';
 import { Unit, convertTemp } from '../../core/temperature';
 
-const WIDTH = 320;
-const HEIGHT = 140;
-const PAD = 24;
+const WIDTH = 360;
+const HEIGHT = 190;
+const PAD_X = 28;
+const PAD_TOP = 28;
+const PAD_BOTTOM = 48; // reserved for the min labels and the dates
 
 @Component({
   selector: 'app-temperature-chart',
@@ -28,9 +30,10 @@ export class TemperatureChart {
     const all = [...max, ...min];
     const lo = Math.min(...all);
     const span = Math.max(...all) - lo || 1;
+    const plotHeight = HEIGHT - PAD_TOP - PAD_BOTTOM;
 
-    const x = (i: number) => PAD + (i * (WIDTH - 2 * PAD)) / Math.max(days.length - 1, 1);
-    const y = (v: number) => HEIGHT - PAD - ((v - lo) / span) * (HEIGHT - 2 * PAD);
+    const x = (i: number) => PAD_X + (i * (WIDTH - 2 * PAD_X)) / Math.max(days.length - 1, 1);
+    const y = (v: number) => PAD_TOP + plotHeight - ((v - lo) / span) * plotHeight;
 
     return {
       maxLine: max.map((v, i) => `${x(i)},${y(v)}`).join(' '),
@@ -41,7 +44,10 @@ export class TemperatureChart {
         yMin: y(min[i]),
         max: max[i],
         min: min[i],
-        label: d.date.slice(5),
+        label: new Date(`${d.date}T12:00:00`).toLocaleDateString('en-GB', {
+          weekday: 'short',
+          day: 'numeric',
+        }),
       })),
     };
   });
