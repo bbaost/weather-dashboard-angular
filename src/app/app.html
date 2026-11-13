@@ -2,8 +2,23 @@
   <h1>Weather Dashboard</h1>
   <app-city-search (citySelected)="onCitySelected($event)" />
 
+  @if (favorites().length) {
+    <div class="favorites">
+      @for (fav of favorites(); track fav.id) {
+        <button type="button" (click)="onCitySelected(fav)">{{ fav.name }}</button>
+      }
+    </div>
+  }
+
   @if (city(); as c) {
-    <h2>{{ c.name }}, {{ c.country }}</h2>
-    <pre>{{ forecast() | json }}</pre>
+    <h2>
+      {{ c.name }}, {{ c.country }}
+      <button type="button" (click)="toggleFavorite(c)">
+        {{ isFavorite() ? '★ Remove favorite' : '☆ Add favorite' }}
+      </button>
+    </h2>
+    @if (loading()) { <p>Loading…</p> }
+    @if (error(); as e) { <p role="alert">{{ e }}</p> }
+    @if (forecast(); as f) { <pre>{{ f | json }}</pre> }
   }
 </main>
