@@ -26,7 +26,7 @@ jobs:
           node-version: 26
           cache: npm
       - run: npm ci
-      - run: npm run build -- --base-href /${{ github.event.repository.name }}/
+      - run: npm run build -- --base-href /
       - id: out
         run: echo "dir=$(ls -d dist/*/browser)" >> "$GITHUB_OUTPUT"
       - uses: actions/configure-pages@v5

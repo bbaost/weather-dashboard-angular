@@ -1,59 +1,51 @@
-# DashboardWeather
+# Weather Dashboard
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.7.
+[![CI](https://github.com/bbaost/weather-dashboard-angular/actions/workflows/ci.yml/badge.svg)](https://github.com/bbaost/weather-dashboard-angular/actions/workflows/ci.yml)
 
-## Development server
+A weather dashboard built with Angular and NgRx: search a city, see the current conditions and a 5-day forecast, save favorites, and switch between °C and °F.
 
-To start a local development server, run:
+**[Live demo](https://weather.baptisteallex.com/)**
 
-```bash
-ng serve
-```
+![Screenshot of the app](docs/screenshot.png)
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Features
 
-## Code scaffolding
+- City search with debounced autocomplete (Open-Meteo geocoding)
+- Current conditions and 5-day forecast
+- Temperature chart (max/min), drawn in inline SVG
+- Favorite cities, persisted in localStorage
+- °C / °F toggle
+- Loading, error and empty states
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Tech stack
 
-```bash
-ng generate component component-name
-```
+Angular (standalone components, signals), TypeScript (strict), NgRx (store, effects, `createFeature`), RxJS, Vitest, ESLint, Prettier, GitHub Actions (CI and deployment to GitHub Pages).
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Technical choices
 
-```bash
-ng generate --help
-```
+- **NgRx for state.** The selected city, forecast, loading/error state, favorites and unit live in one store. Components only read signals from selectors and dispatch actions. Side effects (HTTP calls, saving favorites) are isolated in effects.
+- **RxJS for search.** `debounceTime`, `distinctUntilChanged` and `switchMap` avoid unnecessary requests and cancel outdated ones.
+- **Typed API layer.** Open-Meteo responses are typed and mapped to the app's own models, so the UI doesn't depend on the API's response shape.
+- **No chart library.** The chart is a small SVG component, which keeps the bundle light and the component easy to test.
+- **CI/CD.** Every push runs lint, tests and build, and `master` is deployed automatically to GitHub Pages.
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Getting started
 
 ```bash
-ng test
+git clone https://github.com/bbaost/weather-dashboard-angular.git
+cd weather-dashboard-angular
+npm install
+npm start
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+Open http://localhost:4200.
 
 ```bash
-ng e2e
+npm run lint
+npm test
+npm run build
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Data
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Weather data by [Open-Meteo](https://open-meteo.com/) (CC BY 4.0). No API key required.
